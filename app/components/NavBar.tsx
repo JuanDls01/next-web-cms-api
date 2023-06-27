@@ -1,4 +1,5 @@
 import Link from "next/link";
+import SigninBttn from "./SigninBttn";
 
 const Navbar = () => {
   return (
@@ -12,7 +13,7 @@ const Navbar = () => {
           <Link href="/dashboard">Dashboard</Link>
         </li>
         <li>
-          <Link href="/login">Login</Link>
+          <SigninBttn />
         </li>
       </ul>
     </nav>
