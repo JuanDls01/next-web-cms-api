@@ -35,6 +35,14 @@ npx prisma migrate dev --name migration-name
 
 ## Authentication
 
+I used NextAuth.js to handle the users authentication session at the client and the server side. With this library we can define providers in api/auth/[...nextauht]/route.ts, like Google, Github and many others. I also use json web token to external request and bcrypt to hash the user passwords.
+
+Must install the follow packages:
+
+- bcrypt
+- next-auth
+- jsonwebtoken
+
 Command to generate secret key and next auth key:
 
 ```bash
