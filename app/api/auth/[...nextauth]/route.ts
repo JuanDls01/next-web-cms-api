@@ -16,7 +16,19 @@ const handler = NextAuth({
       },
       async authorize(credentials, req) {
         // Add logic here to look up the user in the db from the credentials supplied
-        const user = { id: "1", name: "J Smith", email: "jsmith@example.com" };
+        // const user = { id: "1", name: "J Smith", email: "jsmith@example.com" };
+
+        const res = await fetch(`${process.env.NEXTAUTH_URL}/api/auth/login`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            username: credentials?.username,
+            password: credentials?.password,
+          }),
+        });
+
+        const user = await res.json();
+        console.log("user next auth", user);
 
         if (user) {
           // Any object returned will be saved in `user` property of the JWT
@@ -30,6 +42,14 @@ const handler = NextAuth({
       },
     }),
   ],
+  // session: {
+  //   maxAge: 5
+  // },
+  callbacks: {
+    async jwt({ token, user }) {
+      return { ...token, ...user };
+    },
+  },
 });
 
 export { handler as GET, handler as POST };
