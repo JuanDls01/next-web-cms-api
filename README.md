@@ -28,3 +28,10 @@ Create a migrations running the command below:
 ```bash
 npx prisma migrate dev --name migration-name
 ```
+
+## Installed libraries
+
+- `bcryptjs` - A library for hashing and comparing passwords.
+
+## Authentication
+
