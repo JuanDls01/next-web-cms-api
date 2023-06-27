@@ -35,3 +35,8 @@ npx prisma migrate dev --name migration-name
 
 ## Authentication
 
+Command to generate secret key and next auth key:
+
+```bash
+openssl rand -base64 32
+```
