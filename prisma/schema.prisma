@@ -16,9 +16,26 @@ model User {
   fullName String?
   password String
   role Role @default(USER)
+  cargos Cargo[]
 }
 
 enum Role {
   USER
   ADMIN
+}
+
+model Cargo {
+  id Int @id @default(autoincrement())
+  type CargoType
+  internTrackingNumber String @unique
+  trackingNumber String
+  location String
+  state String
+  owner User @relation(fields: [ownerId], references: [id])
+  ownerId Int
+}
+
+enum CargoType {
+  FCL
+  LCL
 }
