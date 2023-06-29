@@ -1,4 +1,4 @@
-import { signJwtAccessToken } from "@/lib/jwt";
+import { signJwt } from "@/lib/jwt";
 import prisma from "@/lib/prisma";
 import * as bcrypt from "bcrypt";
 
@@ -17,8 +17,8 @@ export async function POST(request: Request) {
   });
 
   if (user && (await bcrypt.compare(body.password, user.password))) {
-    const { password, id, ...userWithoutPass } = user;
-    const accessToken = signJwtAccessToken(userWithoutPass);
+    const { password, ...userWithoutPass } = user;
+    const accessToken = await signJwt(userWithoutPass, user.username);
     const result = {
       ...userWithoutPass,
       accessToken,

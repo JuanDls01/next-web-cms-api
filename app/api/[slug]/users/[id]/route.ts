@@ -1,4 +1,5 @@
 import prisma from "@/lib/prisma";
+import { NextResponse } from "next/server";
 
 export async function GET(
   request: Request,
@@ -16,5 +17,8 @@ export async function GET(
     return new Response(JSON.stringify(safeUserInfo));
   }
 
-  return new Response(JSON.stringify({ message: "No user founded" }));
+  return new NextResponse(
+    JSON.stringify({ success: false, message: "No user founded" }),
+    { status: 400, headers: { "content-type": "application/json" } }
+  );
 }
