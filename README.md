@@ -4,7 +4,13 @@ This project implement a fullstack app in TypeScript with Next.js using React (f
 
 ## Getting Started
 
-First, run the development server:
+First, run the dockerized db with:
+
+```bash
+docker compose up -d
+```
+
+Then run the project:
 
 ```bash
 npm run dev
@@ -21,12 +27,18 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
 
-## Makes migrations
+## Interesting Prisma commands
 
-Create a migrations running the command below:
+Create migrations:
 
 ```bash
 npx prisma migrate dev --name migration-name
+```
+
+Run prisma studio
+
+```bash
+npx prisma studio
 ```
 
 ## Installed libraries
