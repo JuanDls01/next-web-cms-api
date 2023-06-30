@@ -3,7 +3,11 @@ import * as bcrypt from "bcrypt";
 import { NextResponse, type NextRequest } from "next/server";
 
 export async function GET(request: NextRequest) {
-  return NextResponse.json({ message: `Users endpoint` });
+  const users = await prisma.user.findMany({
+    select: { fullName: true, username: true, role: true },
+    orderBy: { fullName: "desc" },
+  });
+  return NextResponse.json(users);
 }
 
 interface CreateUserRequestBody {
