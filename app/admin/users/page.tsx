@@ -1,18 +1,20 @@
 import prisma from "@/lib/prisma";
+import Table from "../components/Table/Table";
 
 const UsersPage = async () => {
   const users = await getUsers();
+  const columns = [
+    {
+      Header: "Full Name",
+      accesor: "fullName",
+    },
+    { Header: "Username", accesor: "username" },
+    { Header: "Role", accesor: "role" },
+  ];
   return (
     <div>
       <h1>Users</h1>
-      {users?.map((user) => {
-        return (
-          <div key={user.fullName}>
-            <h3>{user.username}</h3>
-            <p>{user.fullName}</p>
-          </div>
-        );
-      })}
+      <Table widthTable={"500px"} rows={users} columns={columns} />
     </div>
   );
 };
