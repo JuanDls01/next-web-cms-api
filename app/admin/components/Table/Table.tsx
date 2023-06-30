@@ -14,7 +14,7 @@ const Table: React.FC<TableProps> = ({
   haveMetaSearch = false,
 }) => {
   return (
-    <div className=" w-full h-screen flex items-center justify-center">
+    <div className="w-full flex items-center justify-center">
       <div
         className={`${widthTable} bg-gray-400 flex flex-col border rounded-2`}
       >

@@ -1,4 +1,5 @@
 import prisma from "@/lib/prisma";
+import Link from "next/link";
 import Table from "../components/Table/Table";
 
 const UsersPage = async () => {
@@ -12,8 +13,11 @@ const UsersPage = async () => {
     { Header: "Role", accesor: "role" },
   ];
   return (
-    <div>
-      <h1>Users</h1>
+    <div className="flex items-center flex-col space-y-5">
+      <h1 className="text-4xl font-bold my-2">Users</h1>
+      <button className="bg-indigo-400 rounded-full p-2">
+        <Link href={"/admin/users/create"}>Create User</Link>
+      </button>
       <Table widthTable={"500px"} rows={users} columns={columns} />
     </div>
   );
