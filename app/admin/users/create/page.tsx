@@ -1,23 +1,28 @@
 "use client";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 
 const schema = yup
   .object({
-    username: yup
+    fullName: yup.string().required(),
+    username: yup.string().required(),
+    password: yup
       .string()
       .matches(
         /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[A-Z])(?=.*[\W_]).*$/,
         "The password must contain letters, numbers and special characters"
       )
       .required(),
-    password: yup.string().required(),
   })
   .required();
 type FormData = yup.InferType<typeof schema>;
 
 const CreateUser = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -25,7 +30,23 @@ const CreateUser = () => {
   } = useForm<FormData>({
     resolver: yupResolver(schema),
   });
-  const onSubmit = (data: FormData) => console.log(data);
+  const onSubmit = async (data: FormData) => {
+    console.log(data);
+    setIsLoading(true);
+    try {
+      await fetch("/api/admin/users", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      setIsLoading(false);
+    } catch (error) {
+      console.error(error);
+    }
+    if (!isLoading) {
+      router.push(`/admin/users?random=${Math.random()}`);
+    }
+  };
   return (
     <div className="flex items-center flex-col space-y-5">
       <h1 className="text-4xl font-bold my-2">Create User</h1>
@@ -35,11 +56,26 @@ const CreateUser = () => {
       >
         <div>
           <label htmlFor="password" className={`text-indigo-600 `}>
+            Full Name
+          </label>
+          <input
+            type="text"
+            placeholder="John Wick"
+            {...register("fullName")}
+            className={`h-10 w-full p-2 my-2 flex items-center justify-center text-white bg-gray-900 border-gray-800 rounded border focus:outline-none focus:border-indigo-500 focus:ring-indigo-500 focus:ring-1 transition-colors peer`}
+            // name="username"
+            // value={productDetails.brand}
+            // onChange={(e) => handleInput(e)}
+          />
+          <p className="text-xs text-indigo-200">{errors.fullName?.message}</p>
+        </div>
+        <div>
+          <label htmlFor="password" className={`text-indigo-600 `}>
             Username
           </label>
           <input
             type="text"
-            placeholder="xxxxxx"
+            placeholder="johnwick01"
             {...register("username")}
             className={`h-10 w-full p-2 my-2 flex items-center justify-center text-white bg-gray-900 border-gray-800 rounded border focus:outline-none focus:border-indigo-500 focus:ring-indigo-500 focus:ring-1 transition-colors peer`}
             // name="username"
@@ -63,13 +99,23 @@ const CreateUser = () => {
           />
           <p className="text-xs text-indigo-200">{errors.password?.message}</p>
         </div>
-        <button
-          className="h-10 w-full mb-4 bg-indigo-600 hover:bg-indigo-400 flex justify-center items-center rounded  active:ring active:ring-indigo-600 text-white"
-          //   disabled={!isValid}
-          type="submit"
-        >
-          Create
-        </button>
+        {!isLoading ? (
+          <button
+            className="h-10 w-full mb-4 bg-indigo-600 hover:bg-indigo-400 flex justify-center items-center rounded  active:ring active:ring-indigo-600 text-white"
+            //   disabled={!isValid}
+            type="submit"
+          >
+            Create
+          </button>
+        ) : (
+          <button
+            className="h-10 w-full mb-4 bg-indigo-600 hover:bg-indigo-400 flex justify-center items-center rounded  active:ring active:ring-indigo-600 text-white"
+            //   disabled={!isValid}
+            type="submit"
+          >
+            Creating...
+          </button>
+        )}
       </form>
     </div>
   );

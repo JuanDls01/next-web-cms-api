@@ -1,7 +1,9 @@
 import prisma from "@/lib/prisma";
 import Link from "next/link";
+import { Suspense } from "react";
 import Table from "../components/Table/Table";
 
+export const revalidate = 0;
 const UsersPage = async () => {
   const users = await getUsers();
   const columns = [
@@ -18,7 +20,9 @@ const UsersPage = async () => {
       <button className="bg-indigo-400 rounded-full p-2">
         <Link href={"/admin/users/create"}>Create User</Link>
       </button>
-      <Table widthTable={"500px"} rows={users} columns={columns} />
+      <Suspense fallback={<p>Loading...</p>}>
+        <Table widthTable={"500px"} rows={users} columns={columns} />
+      </Suspense>
     </div>
   );
 };
@@ -26,7 +30,7 @@ const UsersPage = async () => {
 const getUsers = async () => {
   const users = await prisma.user.findMany({
     select: { fullName: true, username: true, role: true },
-    orderBy: { fullName: "desc" },
+    orderBy: { fullName: "asc" },
   });
   return users;
 };
