@@ -10,7 +10,6 @@ export default withAuth(
   async function middleware(req) {
     let token;
     if (await getToken({ req })) {
-      console.log("obtengo el token");
       token = await getToken({ req });
     } else if (
       !token &&

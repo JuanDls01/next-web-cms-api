@@ -2,6 +2,12 @@
 
 This project implement a fullstack app in TypeScript with Next.js using React (frontend), Next.js API routes and Prisma Client (backend). Also use PostgreSQL database and implement a seed to start develop faster. 
 
+## Features
+
+- prisma ORM
+- NextAuth.js
+- React Hook Form with yup schema validation
+
 ## Getting Started
 
 First, run the dockerized db with:
