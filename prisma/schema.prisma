@@ -11,12 +11,12 @@ datasource db {
 }
 
 model User {
-  id Int @id @default(autoincrement())
-  username String @unique
+  id       Int     @id @default(autoincrement())
+  username String  @unique
   fullName String?
   password String
-  role Role @default(USER)
-  cargos Cargo[]
+  role     Role    @default(USER)
+  cargos   Cargo[]
 }
 
 enum Role {
@@ -25,17 +25,27 @@ enum Role {
 }
 
 model Cargo {
-  id Int @id @default(autoincrement())
-  type CargoType
-  internTrackingNumber String @unique
-  trackingNumber String
-  location String
-  state String
-  owner User @relation(fields: [ownerId], references: [id])
-  ownerId Int
+  id                   Int       @id @default(autoincrement())
+  type                 CargoType
+  internTrackingNumber String    @unique
+  trackingNumber       String
+  location             String
+  state                String
+  owner                User      @relation(fields: [ownerId], references: [id])
+  ownerId              Int
 }
 
 enum CargoType {
   FCL
   LCL
+}
+
+model Product {
+  id          Int     @id @default(autoincrement())
+  name        String
+  description String
+  category    Int
+  prize       Float
+  isActive    Boolean
+  count       Int
 }
