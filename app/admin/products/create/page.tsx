@@ -28,7 +28,6 @@ const CreateUser = () => {
     resolver: yupResolver(schema),
   });
   const onSubmit = async (data: FormData) => {
-    console.log("DATA: ", data);
     setIsLoading(true);
     try {
       await fetch("/api/admin/products", {
