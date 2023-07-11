@@ -30,10 +30,10 @@ export async function POST(request: Request) {
     data: {
       name: body.name,
       description: body.description,
-      category: Number(body.category),
-      prize: Number(body.prize),
-      isActive: Boolean(body.isActive),
-      count:Number(body.count)
+      category: body.category,
+      prize: body.prize,
+      isActive: body.isActive,
+      count:body.count
     },
   });
 

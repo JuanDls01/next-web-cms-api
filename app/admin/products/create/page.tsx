@@ -9,10 +9,24 @@ const schema = yup
   .object({
     name: yup.string().required(),
     description: yup.string().required(),
-    category: yup.string().required(),
-    prize: yup.string().required(),
-    isActive: yup.string().required(),
-    count: yup.string().required(),
+    category: yup.number().required(),
+    prize: yup
+      .number()
+      .required()
+      .test(
+        "Is positive?",
+        "ERROR: The prize must be greater than 0!",
+        (value) => value > 0
+      ),
+    isActive: yup.boolean().required(),
+    count: yup
+      .number()
+      .required()
+      .test(
+        "Is positive?",
+        "ERROR: The count must be greater than 0!",
+        (value) => value > 0
+      ),
   })
   .required();
 type FormData = yup.InferType<typeof schema>;
